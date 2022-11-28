@@ -1,24 +1,32 @@
 package com.lufthansa.magento.step_definition;
 
+import com.lufthansa.magento.page.BasePage;
+import com.lufthansa.magento.utilities.ConfigurationReader;
 import com.lufthansa.magento.utilities.Driver;
 import io.cucumber.java.*;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
-    /*
-    In the class we will be able to pass pre -& post-conditions to each scenario
-    and each step
- */
+
     public class Hooks {
+        BasePage basePage=new BasePage();
 
         @Before
-        public void setupScenario(){
-            System.out.println("===Setting up browser using cucumber @Before");
+        public void setupScenario(Scenario scenario){
+            System.out.println("User navigate to Luma application");
+            Driver.getDriver().get(ConfigurationReader.getProperty("url"));
+            basePage.SignIn.click();
+
         }
 
         @Before("@login")
-        public void setupScenarioForLogin(){
-            System.out.println("===This will only apply scenarios with @logins");
+        public void setupScenarioForLogin(Scenario scenario){
+            if(scenario.isFailed()) {
+                System.out.println("User can not log in");
+            }else{
+                System.out.println("User is on luma WebPage!");
+            }
+
         }
 
         @After
@@ -35,13 +43,19 @@ import org.openqa.selenium.TakesScreenshot;
 
 
         // @BeforeStep
-        public void setupStep(){
-            System.out.println("-------------> applying setup using @BeforeStep");
-        }
+        public void setupStep(Scenario scenario){
+            if(scenario.isFailed()) {
+                System.out.println("Next steps can not be performed!");
+            }
+
+            }
 
         // @AfterStep
-        public void afterStep(){
-            System.out.println("------> applying tearDown using @AfterStep");
+        public void afterStep(Scenario scenario){
+            if(scenario.isFailed()) {
+                System.out.println("Scenarios couldn't be performed!");
+            }
+
         }
 
     }

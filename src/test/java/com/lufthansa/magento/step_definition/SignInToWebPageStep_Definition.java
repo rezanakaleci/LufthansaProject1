@@ -13,7 +13,6 @@ import org.openqa.selenium.WebElement;
 
 public class SignInToWebPageStep_Definition {
 
-    CreatingAccountPage lumaApplicationPage = new CreatingAccountPage();
     BasePage basePage = new BasePage();
 
     @Then("User Click on Sign In link")

@@ -16,10 +16,8 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class ChangePageFilterStep_Definition {
-    BasePage basePage = new BasePage();
-    CreatingAccountPage creatingAccountPage = new CreatingAccountPage();
-    ChangeFilterPage changeFilterPage = new ChangeFilterPage();
 
+    ChangeFilterPage changeFilterPage = new ChangeFilterPage();
     Actions action = new Actions(Driver.getDriver());
 
 
