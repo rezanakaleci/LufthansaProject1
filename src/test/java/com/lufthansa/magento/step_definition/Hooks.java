@@ -9,23 +9,9 @@ import org.openqa.selenium.TakesScreenshot;
 
 
     public class Hooks {
-        BasePage basePage=new BasePage();
 
         @Before
         public void setupScenario(Scenario scenario){
-            System.out.println("User navigate to Luma application");
-            Driver.getDriver().get(ConfigurationReader.getProperty("url"));
-            basePage.SignIn.click();
-
-        }
-
-        @Before("@login")
-        public void setupScenarioForLogin(Scenario scenario){
-            if(scenario.isFailed()) {
-                System.out.println("User can not log in");
-            }else{
-                System.out.println("User is on luma WebPage!");
-            }
 
         }
 
@@ -42,19 +28,8 @@ import org.openqa.selenium.TakesScreenshot;
 
 
 
-        // @BeforeStep
-        public void setupStep(Scenario scenario){
-            if(scenario.isFailed()) {
-                System.out.println("Next steps can not be performed!");
-            }
-
-            }
-
         // @AfterStep
         public void afterStep(Scenario scenario){
-            if(scenario.isFailed()) {
-                System.out.println("Scenarios couldn't be performed!");
-            }
 
         }
 

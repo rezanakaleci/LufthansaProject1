@@ -7,8 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.io.File;
-import java.nio.file.attribute.FileTime;
 import java.util.concurrent.TimeUnit;
 
 public class Driver {
@@ -18,36 +16,34 @@ public class Driver {
     }
 
 
-    private static InheritableThreadLocal<WebDriver> driverPool = new InheritableThreadLocal<>();
+    private static InheritableThreadLocal<WebDriver> driver = new InheritableThreadLocal<>();
 
     public static WebDriver getDriver() {
-        if (driverPool.get() == null) {
+        if (driver.get() == null) {
 
             String browserType = ConfigurationReader.getProperty("browser");
-
-
             switch (browserType) {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
-                    driverPool.set(new ChromeDriver());
-                    driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    driver.set(new ChromeDriver());
+                    driver.get().manage().window().maximize();
+                    driver.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
                 case "firefox":
                     WebDriverManager.firefoxdriver().setup();
-                    driverPool.set(new FirefoxDriver());
-                    driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    driver.set(new FirefoxDriver());
+                    driver.get().manage().window().maximize();
+                    driver.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
             }
         }
-        return driverPool.get();
+        return driver.get();
     }
 
     public static void closeDriver() {
-        if (driverPool.get() != null) {
-            driverPool.get().quit();
-            driverPool.remove();
+        if (driver.get() != null) {
+            driver.get().quit();
+            driver.remove();
         }
     }
 

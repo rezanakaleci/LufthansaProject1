@@ -32,7 +32,6 @@ public class BrowserUtils {
     }
 
 
-
     public static void verifyURLContains(String expectedInURL) {
         Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains(expectedInURL));
 
@@ -122,17 +121,6 @@ public class BrowserUtils {
         fluentWait.until(ExpectedConditions.presenceOfElementLocated((By) el));
     }
 
-
-    public static void verifyElementDisplayed(By by) {
-        try {
-            Assert.assertTrue("Element not visible: " + by, Driver.getDriver().findElement(by).isDisplayed());
-        } catch (NoSuchElementException e) {
-            e.printStackTrace();
-            Assert.fail("Element not found: " + by);
-
-        }
-    }
-
     public static void verifyElementNotDisplayed(By by) {
         try {
             Assert.assertFalse("Element should not be visible: " + by, Driver.getDriver().findElement(by).isDisplayed());
@@ -177,14 +165,6 @@ public class BrowserUtils {
         }
     }
 
-    public static void clickWithJS(WebElement element) {
-        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
-        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].click();", element);
-    }
-
-    public static void scrollToElement(WebElement element) {
-        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
-    }
 
     public static void doubleClick(WebElement element) {
         new Actions(Driver.getDriver()).doubleClick(element).build().perform();
@@ -195,7 +175,13 @@ public class BrowserUtils {
         ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);", element, attributeName, attributeValue);
     }
 
+    public static void NumberFormatException(List<WebElement> el){
+        try{
 
+            int i = Integer.parseInt(String.valueOf(el));
 
+        } catch(NumberFormatException ex){ // handle your exception
+        }
+    }
 
 }

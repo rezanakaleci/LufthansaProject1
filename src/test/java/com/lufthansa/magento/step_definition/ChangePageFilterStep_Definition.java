@@ -1,8 +1,6 @@
 package com.lufthansa.magento.step_definition;
 
-import com.lufthansa.magento.page.BasePage;
 import com.lufthansa.magento.page.ChangeFilterPage;
-import com.lufthansa.magento.page.CreatingAccountPage;
 import com.lufthansa.magento.utilities.BrowserUtils;
 import com.lufthansa.magento.utilities.ConfigurationReader;
 import com.lufthansa.magento.utilities.Driver;
@@ -10,7 +8,9 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -21,205 +21,240 @@ public class ChangePageFilterStep_Definition {
     Actions action = new Actions(Driver.getDriver());
 
 
-    @When("On store menu click on Women dropdown.")
+    @When("User on store menu click on Women dropdown.")
     public void onStoreMenuClickOnWomenDropdown() {
 
-      action.moveToElement(changeFilterPage.WomenDropDown);
+        action.moveToElement(changeFilterPage.womenDropDown);
 
     }
 
-    @Then("Hover over Tops dropdown on the open pop up and click on Jacket menu option.")
-    public void hover_over_tops_dropdown_on_the_open_pop_up_and_click_on_jacket_menu_option() {
+    @Then("User hover over Tops dropdown on the open pop up")
+    public void userHoverOverTopsDropdownOnTheOpenPopUp() {
 
-        action.moveToElement(changeFilterPage.TopsDropDown).perform();
-        action.moveToElement(changeFilterPage.JacketMenu).perform();
-        BrowserUtils.waitForElementClickable(changeFilterPage.JacketMenu).click();
+        action.moveToElement(changeFilterPage.topsDropDown).perform();
 
     }
 
-    @Then("From Shopping Options panel click on Color dropdown and choose one of the colors.")
-    public void from_shopping_options_panel_click_on_color_dropdown_and_choose_one_of_the_colors() {
-
-        BrowserUtils.waitForElementClickable(changeFilterPage.ColorDropdown).click();
-        changeFilterPage.RedColor.click();
-
-    }
-
-    @Then("Check that all the displayed products have the selected color bordered in red.")
-    public void check_that_all_the_displayed_products_have_the_selected_color_bordered_in_red() {
-
-        String expectedResult = changeFilterPage.FirstItem.getAttribute("border");
-        String actualResult = changeFilterPage.SecondItem.getAttribute("border");
-
-        assertEquals(expectedResult, actualResult);
+    @And("User click on Jacket menu option")
+    public void userClickOnJacketMenuOption() {
+        action.moveToElement(changeFilterPage.jacketMenu).perform();
+        BrowserUtils.waitForElementClickable(changeFilterPage.jacketMenu).click();
 
     }
 
-    @And("Click on Price dropdown and select the first option {string} and check that only two product are displayed on the page.")
-    public void clickOnPriceDropdownAndSelectTheFirstOptionAndCheckThatOnlyTwoProductAreDisplayedOnThePage(String FirstPrice) {
+    @And("User from Shopping Options panel click on Color dropdown")
+    public void userFromShoppingOptionsPanelClickOnColorDropdownAndChooseOneOfTheColors() {
+        BrowserUtils.waitForElementClickable(changeFilterPage.colorDropdown).click();
 
-        BrowserUtils.waitForElementClickable(changeFilterPage.PriceDropDown).click();
-        changeFilterPage.FirstPrice.click();
 
-        assertTrue(changeFilterPage.FirstItem.isDisplayed());
-        assertTrue(changeFilterPage.SecondItem.isDisplayed());
     }
-
-    @Then("For each product displayed ,check that the price matches the defined criteria.")
-    public void for_each_product_displayed_check_that_the_price_matches_the_defined_criteria() {
-           double Price1=59.00;    //50.00   //59.99
-           double Price2=57.00;        //59.00       //57.00
-           if(Price1 > 50.00) {
-               assertTrue(changeFilterPage.PriceOfFirstItem.isDisplayed());
-           }else if(Price2 < 59.00) {
-
-               assertTrue(changeFilterPage.PriceOfSecondItem.isDisplayed());
-           }
-        System.out.println("Price matches the defined criteria");
-    }
-
-    @And("Remove Price filter")
-    public void remove_price_filter(){
-
-        Driver.getDriver().get(ConfigurationReader.getProperty("RemovedFilter"));
+    @And("User choose one of the colors")
+    public void userChooseOneOfTheColors() {
+        changeFilterPage.redColor.click();
 
     }
 
-    @Then("Check the items number displayed is increased")
-    public void check_the_items_number_displayed_is_increased() {
+    @Then("User check that all the displayed products have the selected color bordered in red.")
+    public void userCheckThatAllTheDisplayedProductsHaveTheSelectedColorBorderedInRed() {
 
-        assertTrue(changeFilterPage.Item5.isDisplayed());
+        BrowserUtils.waitFor(3);
+
+       // String actualResult= changeFilterPage.redColor.getText();
+      String redColorTrue= changeFilterPage.borderInRed.getAttribute("option-label");
+
+     if(changeFilterPage.borderInRed.isSelected()){
+         assertEquals(redColorTrue, "Red");
+     }
+        System.out.println("All displayed products have the selected color in red");
+
+
+    }
+
+    @And("User click on Price dropdown")
+    public void userClickOnPriceDropdownAndSelectTheFirstOptionThatIsDisplayed() {
+        BrowserUtils.waitForElementClickable(changeFilterPage.priceDropDown).click();
+
+
+    }
+    @And("User select the first option that is displayed")
+    public void userSelectTheFirstOptionThatIsDisplayed() {
+        changeFilterPage.firstPrice.click();
+
+    }
+
+    @And("User check that only two product are displayed on the page.")
+    public void userCheckThatOnlyTwoProductAreDisplayedOnThePage() {
+        assertTrue(changeFilterPage.firstItem.isDisplayed());
+        assertTrue(changeFilterPage.secondItem.isDisplayed());
+    }
+
+    @Then("User for each product displayed ,check that the price matches the defined criteria.")
+    public void userForEachProductDisplayedCheckThatThePriceMatchesTheDefinedCriteria() {
+
+
+         for (WebElement eachprice : changeFilterPage.priceOfItem) {
+            if (Double.parseDouble(eachprice.getText().replace("$","")) > 59.99 && Double.parseDouble(eachprice.getText().replace("$","")) < 50.00) {
+                Assert.fail("Prices does not matches the defined criteria");
+            }else{
+                System.out.println("Price matches the defined criteria");
+            }
+        }
+
     }
 
 
-    @Then("Add the two first item in the Wish List.")
-    public void add_the_two_first_item_in_the_wish_list() {
+    @When("User remove price filter")
+    public void userRemovePriceFilter() {
+        changeFilterPage.priceRemoveFilter.click();
 
-        action.moveToElement(changeFilterPage.FirstItem).perform();
+    }
 
-        BrowserUtils.waitForElementClickable(changeFilterPage.AddWishList).click();
-        assertTrue(changeFilterPage.SuccessfulMessage1.isDisplayed());
+    @And("User Check the items number displayed is increased")
+    public void userCheckTheItemsNumberDisplayedIsIncreased() {
 
-        changeFilterPage.ClickHereLink.click();
+        assertTrue(changeFilterPage.item5.isDisplayed());
+    }
 
-        action.moveToElement(changeFilterPage.SecondProduct).perform();
+
+    @And("User add the two first item in the wish List.")
+    public void userAddTheTwoFirstItemInTheWishList() {
+
+        action.moveToElement(changeFilterPage.firstItem).perform();
+
+        BrowserUtils.waitForElementClickable(changeFilterPage.addWishList).click();
+        assertTrue(changeFilterPage.successfulMessage1.isDisplayed());
+
+        changeFilterPage.clickHereLink.click();
+
+        action.moveToElement(changeFilterPage.secondProduct).perform();
         BrowserUtils.waitFor(5);
-        changeFilterPage.AddWishList2.click();
+        changeFilterPage.addWishList2.click();
 
     }
 
-    @Then("Check successful message.")
-    public void check_successful_message_text_icon() {
-        assertTrue(changeFilterPage.SuccessfulMessage2.isDisplayed());
+    @And("User check successful message.")
+    public void userCheckSuccessfulMessage() {
+        assertTrue(changeFilterPage.successfulMessage2.isDisplayed());
     }
 
-    @Then("Click on User Profile, and check the correct number of items is displayed")
-    public void click_on_user_profile_and_check_the_correct_number_of_items_is_displayed() {
+    @Then("User click on User Profile, and check the correct number of items is displayed")
+    public void userClickOnUserProfileAndCheckTheCorrectNumberOfItemsIsDisplayed() {
 
-        changeFilterPage.MyAccountButton.click();
 
-        assertTrue(changeFilterPage.MyWishList2ItemDisplayed.isDisplayed());
+        changeFilterPage.myAccountButton.click();
+
+        assertTrue(changeFilterPage.myWishList2ItemDisplayed.isDisplayed());
     }
+
 
 
     @When("User Add all displayed items to the Shopping Cart")
     public void userAddAllDisplayedItemsToTheShoppingCart() {
 
-        action.moveToElement(changeFilterPage.FirstItem).perform();
-        changeFilterPage.XsSize.click();
-        BrowserUtils.waitForElementClickable(changeFilterPage.AddToCard).click();
+        action.moveToElement(changeFilterPage.firstItem).perform();
+        changeFilterPage.xsSize.click();
+        BrowserUtils.waitForElementClickable(changeFilterPage.addToCard1).click();
 
 
-        action.moveToElement(changeFilterPage.SecondItem).perform();
-        changeFilterPage.XsSize2.click();
+        action.moveToElement(changeFilterPage.secondItem).perform();
+        changeFilterPage.xsSize2.click();
         BrowserUtils.waitFor(5);
-        changeFilterPage.AddToCard2.click();
+        changeFilterPage.addToCard2.click();
 
     }
 
     @Then("User Check successful message")
     public void userCheckSuccessfulMessageTextIcon() {
         BrowserUtils.waitFor(5);
-        changeFilterPage.DoneMessage.isDisplayed();
+        changeFilterPage.doneMessage.isDisplayed();
 
     }
 
     @And("User Open the Shopping Cart")
     public void userOpenTheShoppingCart() {
         BrowserUtils.waitFor(5);
-        action.moveToElement(changeFilterPage.ShoppingLink).perform();
-        BrowserUtils.waitForElementClickable(changeFilterPage.ShoppingLink).click();
+        action.moveToElement(changeFilterPage.shoppingLink).perform();
+        BrowserUtils.waitForElementClickable(changeFilterPage.shoppingLink).click();
     }
 
-    @And("Verify that we have navigated to Shopping Cart Page")
-    public void verifyThatWeHaveNavigatedToShoppingCartPage() {
+    @And("User verify that we have navigated to Shopping Cart Page")
+    public void userVerifyThatWeHaveNavigatedToShoppingCartPage() {
 
-       assertTrue(changeFilterPage.ShoppingCartName.isDisplayed());
+       assertTrue(changeFilterPage.shoppingCartName.isDisplayed());
         System.out.println("We are at Shopping Cart Page");
 
     }
 
-    @Then("Verify that the prices sum for all items is equal to Order Total price in the Summary section")
-    public void verifyThatThePricesSumForAllItemsIsEqualToOrderTotalPriceInTheSummarySection() {
+    @Then("User verify that the prices sum for all items is equal to Order Total price in the Summary section")
+    public void userVerifyThatThePricesSumForAllItemsIsEqualToOrderTotalPriceInTheSummarySection() {
 
-        String expectedResult = changeFilterPage.SubTotalPrice.getText();
-        String actualResult = changeFilterPage.SummaryTotalPrice.getText();
+        String expectedResult = changeFilterPage.subTotalPrice.getText();
+        String actualResult = changeFilterPage.summaryTotalPrice.getText();
 
         assertEquals(expectedResult, actualResult);
     }
 
-    @When("Delete the first item on shopping cart")
-    public void deleteTheFirstItemOnShoppingCart() {
+    @When("User delete the first item on shopping cart")
+    public void userDeleteTheFirstItemOnShoppingCart() {
+
 
         Driver.getDriver().get(ConfigurationReader.getProperty("shoppingCARD"));
 
-        action.moveToElement(changeFilterPage.FirstItem).perform();
-        changeFilterPage.XsSize.click();
-       BrowserUtils.waitForElementClickable(changeFilterPage.AddToCard).click();
+        action.moveToElement(changeFilterPage.firstItem).perform();
+        changeFilterPage.xsSize.click();
+       BrowserUtils.waitForElementClickable(changeFilterPage.addToCard1).click();
 
-        action.moveToElement(changeFilterPage.SecondItem).perform();
-       changeFilterPage.XsSize2.click();
-        BrowserUtils.waitForElementClickable(changeFilterPage.AddToCard2).click();
+        action.moveToElement(changeFilterPage.secondItem).perform();
+       changeFilterPage.xsSize2.click();
+        BrowserUtils.waitForElementClickable(changeFilterPage.addToCard2).click();
 
-       action.moveToElement(changeFilterPage.ShoppingLink).perform();
-       BrowserUtils.waitForElementClickable(changeFilterPage.ShoppingLink).click();
+       action.moveToElement(changeFilterPage.shoppingLink).perform();
+       BrowserUtils.waitForElementClickable(changeFilterPage.shoppingLink).click();
 
 
-        BrowserUtils.waitForElementClickable(changeFilterPage.RemoveItem1).click();
+        BrowserUtils.waitForElementClickable(changeFilterPage.removeItem1).click();
+    }
+
+    @Then("User Verify that the number of elements in Shopping Cart table is decreased by one")
+    public void userVerifyThatTheNumberOfElementsInShoppingCartTableIsDecreasedByOne() {
+
+       String expectedResult="";
+       String actualResult=changeFilterPage.itemInBag.getText();
+        assertEquals(expectedResult, actualResult);
+
+        System.out.println("Number of items is decreased by 1");
     }
 
 
-    @Then("Verify that the number of elements in Shopping Cart table is decreased by {string}")
-    public void verifyThatTheNumberOfElementsInShoppingCartTableIsDecreasedBy(String numberDecreased) {
+    @And("User repeat steps one and two until the last item is deleted.")
+    public void userRepeatStepsOneAndTwoUntilTheLastItemIsDeleted() {
 
-       changeFilterPage.NumberBox.isDisplayed();
-    }
-
-    @And("Repeat steps one and two until the last item is deleted.")
-    public void repeatStepsOneAndTwoUntilTheLastItemIsDeleted() {
-
-     BrowserUtils.waitForElementClickable(changeFilterPage.RemoveItem2).click();
+     BrowserUtils.waitForElementClickable(changeFilterPage.removeItem2).click();
 
     }
 
-    @And("Verify that Shopping Cart is empty and check message {string} is displayed")
-    public void verifyThatShoppingCartIsEmptyAndCheckMessageIsDisplayed(String message) {
+    @And("User verify that Shopping Cart is empty and check message {string} is displayed")
+    public void userVerifyThatShoppingCartIsEmptyAndCheckMessageIsDisplayed(String arg0) {
+
        String expectedResult="You have no items in your shopping cart.";
-       String actualResult=changeFilterPage.EmptyMessage.getText();
+       String actualResult=changeFilterPage.emptyMessage.getText();
+
        assertEquals(expectedResult,actualResult);
-        assertTrue(changeFilterPage.EmptyMessage.isDisplayed());
+
+        assertTrue(changeFilterPage.emptyMessage.isDisplayed());
     }
 
 
-    @Then("Close the browser")
+    @Then("User close the browser")
     public void closeTheBrowser() {
 
-        Driver.getDriver().close();
-
     }
 
 
-    }
+
+
+
+}
 
 
 

@@ -15,31 +15,40 @@ public class SignInToWebPageStep_Definition {
 
     BasePage basePage = new BasePage();
 
-    @Then("User Click on Sign In link")
-    public void user_click_on_sign_in_link() {
+    @Given("User Navigate to Web Page")
+    public void userNavigateToWebPage() {
         Driver.getDriver().get(ConfigurationReader.getProperty("url"));
+
+
+    }
+
+    @Then("User Click on sign in link")
+    public void userClickOnSignInLink() {
         basePage.SignIn.click();
 
     }
 
-    @Given("User login with the credentials, email {string} and {string}")
-    public void userLoginWithTheCredentialsEmailAnd(String Email, String Password) {
+    @Given("User login with the credentials, email {string} and password {string}")
+    public void userLoginWithTheCredentialsEmailAndPassword(String Email, String Password) {
 
         basePage.Email.sendKeys(Email);
         basePage.Password.sendKeys(Password);
         basePage.SigInButton.click();
-
     }
 
 
     @And("User check your username is displayed on right corner of the page.")
     public void useCheckYourUsernameIsDisplayedOnRightCornerOfThePage() {
-        // String expectedTitle="Welcome, Sergita Kaleci!";
+
         BrowserUtils.sleep(5);
         Assert.assertTrue(basePage.WelcomeMessage.isDisplayed());
 
     }
+
+
+
 }
+
 
 
 

@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 import static org.openqa.selenium.By.xpath;
 
 public class ChangeFilterPage {
@@ -14,143 +16,112 @@ public class ChangeFilterPage {
         PageFactory.initElements(Driver.getDriver(),this);
     }
 
-    @FindBy(xpath = "//div[2]/nav/ul/li[2]/a/span[1]")
-    public WebElement WomenDropDown;
+    @FindBy(xpath = "//*[@id='ui-id-4']")       //div[2]/nav/ul/li[2]/a/span[1]
+    public WebElement womenDropDown;
 
-    @FindBy(xpath = "//ul/li[2]/ul/li[1]/a/span[2]")
-   public WebElement TopsDropDown;
+    @FindBy(xpath = "//*[@id='ui-id-9']")   //*[@id='ui-id-9']  //ul/li[2]/ul/li[1]/a/span[2]
+   public WebElement topsDropDown;
 
 
-  // @FindBy(xpath = "//div[2]/nav/ul/li[2]/ul/li[1]/ul/li[1]/a/span")
-  //  public WebElement JacketMenu;
-    @FindBy(xpath = "//div[2]/nav/ul/li[2]/ul/li[1]/ul/li[1]/a/span")
-    public WebElement JacketMenu;
+    @FindBy(xpath = "//*[@id='ui-id-11']")    //div[2]/nav/ul/li[2]/ul/li[1]/ul/li[1]/a/span
+    public WebElement jacketMenu;
 
-   //@FindBy(xpath = "//div[2]/div/div[2]/div/div[4]/div[2]")
-    //public WebElement ColorDropDown;
     @FindBy(xpath = "//div[2]/div/div[4]/div[1]")
-    public WebElement ColorDropdown;
+    public WebElement colorDropdown;
 
     @FindBy(xpath = "//div[4]/div[2]/div/div/a[8]/div")
-    public WebElement RedColor;
-
-   @FindBy(xpath = "//*[@id=\"narrow-by-list\"]/div[4]/div[2]/div/div/a[2]/div")
-    public WebElement BlueColor;
+    public WebElement redColor;
 
    @FindBy(xpath = "//div[2]/div[3]/div[3]/div[1]")
-   public WebElement PriceDropDown;
-
-   @FindBy(xpath = "//div[3]/div[2]/div/div[2]/div[3]/div[3]/div[1]")
-   public WebElement PriceDropDown2;
-
+   public WebElement priceDropDown;
 
    @FindBy(xpath = "//div[2]/div[3]/div[3]/div[2]/ol/li[1]/a")
-    public WebElement FirstPrice;
+    public WebElement firstPrice;
 
-   @FindBy(xpath = "//main/div[3]/div[2]/div/div[2]/div[1]/ol/li/span[2]")
-   public WebElement ColorInRed;
+   @FindBy(xpath = "//*[@option-label='Red']")
+   public WebElement  borderInRed;
 
-   @FindBy(xpath = "//div/div[2]/div[1]/ol/li[1]/a")
-    public WebElement PriceRemoveFilter;         ////div[2]/div[1]/ol/li[1]/a
+   @FindBy(xpath = "//*[contains(@title,'Remove Price')] ")
+    public WebElement priceRemoveFilter;
 
    @FindBy(xpath = "//main/div[3]/div[1]/div[2]/p")
-    public WebElement Item5;
+    public WebElement item5;
 
    @FindBy(xpath = "//div[3]/div[1]/div[3]/ol/li[1]/div")
-    public WebElement FirstItem;
-
-   @FindBy(xpath = "//div[3]/ol/li[1]/div/a/span")
-   public  WebElement FirstProduct;
+    public WebElement firstItem;
 
    @FindBy(xpath = "//div[3]/ol/li[2]/div/a/span/span/img")
-   public WebElement SecondProduct;
+   public WebElement secondProduct;
 
     @FindBy(xpath = "//div[3]/div[1]/div[3]/ol/li[2]/div")
-    public WebElement SecondItem;
+    public WebElement secondItem;
 
     @FindBy(xpath = "//div[1]/div[3]/ol/li[1]/div/div/div[4]/div/div[2]/a[1]")
-    public WebElement AddWishList;
+    public WebElement addWishList;
 
     @FindBy(xpath = "//div[3]/ol/li[2]/div/div/div[4]/div/div[2]/a[1]")
-    public WebElement AddWishList2;
+    public WebElement addWishList2;
 
 
     @FindBy(xpath = "//div[2]/main/div[1]/div[2]/div/div")
-    public WebElement SuccessfulMessage1;
+    public WebElement successfulMessage1;
 
     @FindBy(xpath = "//main/div[1]/div[2]/div/div")
-    public WebElement SuccessfulMessage2;
+    public WebElement successfulMessage2;
 
     @FindBy(xpath = "//div[1]/div[2]/div/div/div/a")
-    public WebElement ClickHereLink;
-
-    @FindBy(xpath = "//div[2]/div/div[2]/ul/li[1]/a")
-    public WebElement MyAccount;
+    public WebElement clickHereLink;
 
     @FindBy(xpath = "//header/div[1]/div/ul/li[2]/span/button")
-    public WebElement MyAccountButton;
+    public WebElement myAccountButton;
 
     @FindBy(xpath = "//div[2]/header/div[1]/div/ul/li[2]/div/ul/li[2]/a")
-    public WebElement MyWishList2ItemDisplayed;
+    public WebElement myWishList2ItemDisplayed;
 
     @FindBy(xpath = "//div[3]/ol/li[1]/div/div/div[3]/div[1]/div/div[1]")
-    public WebElement XsSize;
+    public WebElement xsSize;
 
     @FindBy(xpath = "//ol/li[2]/div/div/div[3]/div[1]/div/div[1]")
-    public WebElement XsSize2;
+    public WebElement xsSize2;
 
     @FindBy(xpath = "//div[2]/main/div[2]/div[2]/div/div")
-    public WebElement DoneMessage;
+    public WebElement doneMessage;
 
-    @FindBy(xpath = "//div[2]/div[2]/div/div/div")
-    public WebElement SuccessfulMessage;
 
     @FindBy(xpath = "//div[1]/h1/span")
-    public WebElement ShoppingCartName;
-
-
-    @FindBy(xpath = "//div[2]/header/div[2]/div[1]/a")
-    public WebElement ShoppingBag;
+    public WebElement shoppingCartName;
 
      @FindBy(xpath = "//div[2]/div[2]/div/div/div/a")
-     public WebElement ShoppingLink;
+     public WebElement shoppingLink;
 
-    @FindBy(xpath = "//div/div/div/div[2]/div[5]/div/a/span")
-    public WebElement ViewAndEditCard;
+
+    @FindBy(xpath = "//*[@class='counter-number']  ")
+    public WebElement itemInBag;
 
     @FindBy(xpath = "//table/tbody[1]/tr[2]/td/div/a[3]")
-    public  WebElement RemoveItem1;
+    public  WebElement removeItem1;
 
     @FindBy(xpath = "//table/tbody/tr[2]/td/div/a[3]")
-     public  WebElement RemoveItem2;
-
-    @FindBy(xpath = "//div[2]/div[1]/a/span[2]/span[1]")
-    public WebElement NumberBox;
-
-
-    @FindBy(className = "counter")
-    public WebElement CorrectNumberOfItems;
+     public  WebElement removeItem2;
 
     @FindBy(xpath = "//ol/li[1]/div/div/div[4]/div/div[1]/form/button")
-    public WebElement AddToCard;
+    public WebElement addToCard1;
 
     @FindBy(xpath = "//ol/li[2]/div/div/div[4]/div/div[1]/form/button")
-    public WebElement AddToCard2;
+    public WebElement addToCard2;
 
     @FindBy(xpath = "//table/tbody/tr[3]/td/strong/span")
-   public WebElement SummaryTotalPrice;
+   public WebElement summaryTotalPrice;
 
     @FindBy(xpath = "//div[2]/div/table/tbody/tr[1]/td/span")
-    public  WebElement SubTotalPrice;
+    public  WebElement subTotalPrice;
 
     @FindBy(xpath = "//div[3]/div/div[2]/p[1]")
-   public WebElement EmptyMessage;
+   public WebElement emptyMessage;
 
-    @FindBy(xpath = "//div[3]/ol/li[1]/div/div/div[2]/span/span/span[2]/span")
-   public WebElement PriceOfFirstItem;
+    @FindBy(xpath = "//*[@class='price-wrapper ']")
+   public List<WebElement> priceOfItem;
 
-    @FindBy(xpath = "//div[3]/ol/li[2]/div/div/div[2]/span/span/span[2]/span")
-    public WebElement PriceOfSecondItem;
 
 
 }
